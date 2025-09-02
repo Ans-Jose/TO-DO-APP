@@ -3,7 +3,7 @@ const dateInput = document.getElementById("dateInput");
 const timeInput = document.getElementById("timeInput");
 const taskList = document.getElementById("taskList");
 
-// Load tasks when page loads
+// Load tasks from Flask backend
 async function loadTasks() {
     const res = await fetch('/tasks');
     const data = await res.json();
@@ -22,10 +22,36 @@ async function loadTasks() {
             <button>Delete</button>
         `;
 
+        // Delete button functionality
         li.querySelector('button').onclick = () => deleteTask(index);
         taskList.appendChild(li);
-    });}
+    });
+}
 
-// Add new
+// Add a new task
+async function addTask() {
+    const task = taskInput.value.trim();
+    const date = dateInput.value;
+    const time = timeInput.value;
 
+    if (!task || !date || !time) return;
 
+    await fetch('/tasks', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({task, date, time})
+    });
+
+    taskInput.value = '';
+    dateInput.value = '';
+    timeInput.value = '';
+
+    loadTasks();
+}
+
+// Delete a task
+async function deleteTask(id) {
+    await fetch(`/tasks/${id}`, { method: 'DELETE' });
+    loadTasks();}
+    // Run when page loads
+window.onload = loadTasks;
