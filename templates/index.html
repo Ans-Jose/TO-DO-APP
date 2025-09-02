@@ -1,28 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>TO-DO APP</title>
-    <!-- Link CSS -->
-     <link rel="stylesheet" href="/static/style.css">
+  <meta charset="UTF-8">
+  <title>TO-DO APP</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
+<script>
+async function loadTasks() {
+    const res = await fetch('/tasks');
+    const tasks = await res.json();
+    const taskList = document.getElementById('taskList');
+    taskList.innerHTML = '';
+   tasks.forEach(task => {
+    const li = document.createElement('li');
+
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'task-name';
+    nameSpan.textContent = task.task;
+
+    const dateSpan = document.createElement('span');
+    dateSpan.className = 'task-date';
+    dateSpan.textContent = task.date;
+
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'task-time';
+    timeSpan.textContent = task.time;
+
+    // Optional: delete button
+    const btn = document.createElement('button');
+    btn.textContent = 'Delete';
+    btn.onclick = async () => {
+        await fetch(`/tasks/${task.id}`, { method: 'DELETE' });
+        loadTasks(); // refresh after delete
+    };
+
+    li.appendChild(nameSpan);
+    li.appendChild(dateSpan);
+    li.appendChild(timeSpan);
+    li.appendChild(btn); // add delete button
+    document.getElementById('taskList').appendChild(li);
+});
+
+
+        const btn = document.createElement('button');
+        btn.textContent = 'Delete';
+        btn.onclick = async () => {
+            await fetch(`/tasks/${task.id}`, { method: 'DELETE' });
+            loadTasks();  // Refresh list after delete
+        };
+        li.appendChild(btn);
+        taskList.appendChild(li);
+    };
+
+// Load tasks when page opens
+window.onload = loadTasks;
+</script>
+
 <body>
-    <div class="container">
-        <h1>To-Do App</h1>
 
-        <!-- Input row -->
-        <div class="input-row">
-            <input id="taskInput" type="text" placeholder="Enter a task...">
-            <input id="dateInput" type="date">
-            <input id="timeInput" type="time">
-            <button onclick="addTask()">Add</button>
-        </div>
-
-        <!-- Task list -->
-        <ul id="taskList"></ul>
+  <div class="container">
+    <div class="header">
+      <h1>My To-Do List</h1>
+      <a href="/past" class="past-link">📜 Past Records</a>
     </div>
 
-    <!-- Link JavaScript -->
-   <script src="/static/script.js"></script>
+    <div class="input-row">
+      <input id="taskInput" type="text" placeholder="Enter task">
+      <input id="dateInput" type="date">
+      <input id="timeInput" type="time">
+      <button onclick="addTask()">Add</button>
+    </div>
+
+    <ul id="taskList"></ul>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-/* Whole page styling */
 body {
     background-image: url("/static/background.jpg");
     background-size: cover;
@@ -11,6 +10,28 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+}
+
+/* Past records link above container */
+.past-link {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.past-link a {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4CAF50;
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 2px solid #4CAF50;
+    border-radius: 6px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.past-link a:hover {
+    background: #4CAF50;
+    color: white;
 }
 
 /* Center container box */
@@ -73,6 +94,33 @@ ul {
     margin-top: 25px;
     padding: 0;
 }
+
+/* Each task row */
+ul li {
+    display: flex;
+    justify-content: space-between; /* left, center, right */
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Individual elements */
+ul li .task-name {
+    text-align: left;
+    flex: 1;
+}
+
+ul li .task-date {
+    text-align: center;
+    flex: 1;
+}
+
+ul li .task-time {
+    text-align: right;
+    flex: 1;
+    padding-right:45px;
+}
+
 
 /* Each task item */
 li {
@@ -231,3 +279,15 @@ li button {
 li button:hover {
     background-color: #c0392b;
 }
+
+.past-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+    gap: 10px; /* space between columns */
+}
+
+.past-task { flex: 2; text-align: left; }
+.past-success, .past-failure { flex: 1; text-align: center; }
+.past-row button { flex: 0; margin-left: 10px; }

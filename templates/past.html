@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Past Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Container styling */
+        .container { max-width: 600px; margin: auto; padding: 20px; }
+
+        /* Input row */
+        .input-row { display: flex; gap: 10px; margin-bottom: 20px; }
+
+        /* Past records list */
+        #pastList { list-style: none; padding: 0; margin: 0; }
+
+        /* Each row */
+        .past-row {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-bottom: 1px solid #ddd;
+            gap: 10px;
+        }
+
+        .past-task { flex: 2; text-align: left; }
+        .past-success, .past-failure { flex: 1; text-align: center; }
+        .past-row button { flex: 0; margin-left: 10px; }
+
+        /* Back button */
+        .past-button { text-decoration: none; padding: 5px 10px; border: 1px solid #333; border-radius: 5px; }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="top-row">
+            <h1>Past Records</h1>
+        </div>
+
+        <!-- Input row to add past record -->
+        <div class="input-row">
+            <input id="pastInput" type="text" placeholder="Enter past task">
+            <select id="statusInput">
+                <option value="success">✅ Success</option>
+                <option value="failure">❌ Failure</option>
+            </select>
+            <button onclick="addPast()">Add</button>
+        </div>
+
+        <!-- List of past records -->
+        <ul id="pastList"></ul>
+
+        <!-- Back to To-Do List -->
+        <div style="text-align:center; margin-top:20px;">
+            <a href="{{ url_for('home') }}" class="past-button">⬅ Back to To-Do</a>
+        </div>
+    </div>
+
+    <script>
+    // Load past records
+    async function loadPastRecords() {
+        const res = await fetch('/past_records');
+        const records = await res.json();
+        const pastList = document.getElementById('pastList');
+        pastList.innerHTML = '';
+
+        records.forEach(record => {
+            const li = document.createElement('li');
+            li.className = 'past-row';
+
+            // Task column
+            const taskSpan = document.createElement('span');
+            taskSpan.className = 'past-task';
+            taskSpan.textContent = record.task;
+
+            // Success column
+            const successSpan = document.createElement('span');
+            successSpan.className = 'past-success';
+            successSpan.textContent = record.status.toLowerCase() === 'success' ? '✅' : '';
+
+            // Failure column
+            const failureSpan = document.createElement('span');
+            failureSpan.className = 'past-failure';
+            failureSpan.textContent = record.status.toLowerCase() === 'failure' ? '❌' : '';
+
+            // Delete button
+            const btn = document.createElement('button');
+            btn.textContent = 'Delete';
+            btn.onclick = async () => {
+                await fetch(`/past_records/${record.id}`, { method: 'DELETE' });
+                loadPastRecords(); // Refresh list after delete
+            };
+
+            // Append all elements to li
+            li.appendChild(taskSpan);
+            li.appendChild(successSpan);
+            li.appendChild(failureSpan);
+            li.appendChild(btn);
+
+            pastList.appendChild(li);
+        });
+    }
+
+    // Add a new past record
+    async function addPast() {
+        const entry = document.getElementById('pastInput').value;
+        const status = document.getElementById('statusInput').value;
+        if (!entry) return alert("Please enter something!");
+
+        await fetch('/past_records', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ entry, status })
+        });
+
+        document.getElementById('pastInput').value = ''; // clear input
+        loadPastRecords(); // refresh the list dynamically
+    }
+
+    // Load past records when page opens
+    window.onload = loadPastRecords;
+    </script>
+</body>
+</html>
