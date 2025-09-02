@@ -1,62 +1,45 @@
-// Load tasks when the page opens
-async function loadTasks() {
-  const res = await fetch('/tasks');
-  const data = await res.json();
-  
-  const taskList = document.getElementById('taskList');
-  taskList.innerHTML = '';
-  
-  data.forEach((taskObj, index) => {
-    const li = document.createElement('li');
+const taskInput = document.getElementById("taskInput");
+const dateInput = document.getElementById("dateInput");
+const timeInput = document.getElementById("timeInput");
+const taskList = document.getElementById("taskList");
 
-    // Task content container
-    const taskContent = document.createElement('div');
-    taskContent.className = 'task-content';
-    taskContent.innerHTML = `
-      <span class="task-name">${taskObj.task}</span>
-      <span class="task-date">${taskObj.date}</span>
-      <span class="task-time">${taskObj.time}</span>
-    `;
+let tasks = []; // store tasks in memory
 
-    const delBtn = document.createElement('button');
-    delBtn.textContent = 'Delete';
-    delBtn.onclick = () => deleteTask(index);
-
-    li.appendChild(taskContent);
-    li.appendChild(delBtn);
-    taskList.appendChild(li);
-  });
-}
-
-// Add new task
-async function addTask() {
-    const taskInput = document.getElementById('taskInput');
-    const dateInput = document.getElementById('dateInput');
-    const timeInput = document.getElementById('timeInput');
-
-    const task = taskInput.value.trim();
+function addTask() {
+    const task = taskInput.value;
     const date = dateInput.value;
     const time = timeInput.value;
 
-    if (!task || !date || !time) return; // require all fields
+    if (!task) return;
 
-    await fetch('/tasks', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({task, date, time})
+    const taskData = { task, date, time };
+    tasks.push(taskData);
+    renderTasks();
+
+    taskInput.value = "";
+    dateInput.value = "";
+    timeInput.value = "";
+}
+
+function deleteTask(index) {
+    tasks.splice(index, 1);
+    renderTasks();
+}
+
+function renderTasks() {
+    taskList.innerHTML = "";
+    tasks.forEach((t, i) => {
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+            <div class="task-content">
+                <span class="task-name">${t.task}</span>
+                <span class="task-date">${t.date}</span>
+                <span class="task-time">${t.time}</span>
+            </div>
+            <button onclick="deleteTask(${i})">Delete</button>
+        `;
+        taskList.appendChild(li);
     });
-
-    taskInput.value = '';
-    dateInput.value = '';
-    timeInput.value = '';
-    loadTasks();
 }
 
-// Delete a task
-async function deleteTask(id) {
-  await fetch(`/tasks/${id}`, {method: 'DELETE'});
-  loadTasks();
-}
-
-// Run when page loads
-window.onload = loadTasks;
