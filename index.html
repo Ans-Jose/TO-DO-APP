@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TO-DO APP</title>
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do App</h1>
+
+        <!-- Input row -->
+        <div class="input-row">
+            <input id="taskInput" type="text" placeholder="Enter a task...">
+            <input id="dateInput" type="date">
+            <input id="timeInput" type="time">
+            <button onclick="addTask()">Add</button>
+        </div>
+
+        <!-- Task list -->
+        <ul id="taskList"></ul>
+    </div>
+
+    <!-- Link JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
