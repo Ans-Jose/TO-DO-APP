@@ -1,6 +1,6 @@
 /* Whole page styling */
 body {
-    background-image: url("/static/background.jpg");
+    background-image: url("background.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -114,3 +114,4 @@ li button {
 li button:hover {
     background-color: #c0392b;
 }
+
