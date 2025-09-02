@@ -1,0 +1,233 @@
+/* Whole page styling */
+body {
+    background-image: url("/static/background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Center container box */
+.container {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 40px 30px;
+    border-radius: 12px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Heading */
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 32px;
+}
+
+/* Input row */
+.input-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.input-row input[type="text"],
+.input-row input[type="date"],
+.input-row input[type="time"] {
+    flex: 1 1 auto;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+}
+
+.input-row button {
+    flex: 0 0 auto;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 6px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.input-row button:hover {
+    background-color: #45a049;
+}
+
+/* Task list */
+ul {
+    list-style: none;
+    margin-top: 25px;
+    padding: 0;
+}
+
+/* Each task item */
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 18px;
+    color: #333;
+}
+
+/* Task content inside li */
+.task-content {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+}
+
+.task-name {
+    font-weight: bold;
+    min-width: 120px;
+}
+
+.task-date, .task-time {
+    min-width: 90px;
+}
+
+/* Delete button */
+li button {
+    background-color: #e74c3c;
+    padding: 6px 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+li button:hover {
+    background-color: #c0392b;
+}
+
+/* Whole page styling */
+body {
+    background-image: url("background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Center container box */
+.container {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 40px 30px;
+    border-radius: 12px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Heading */
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 32px;
+}
+
+/* Input row */
+.input-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.input-row input[type="text"],
+.input-row input[type="date"],
+.input-row input[type="time"] {
+    flex: 1 1 auto;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+}
+
+.input-row button {
+    flex: 0 0 auto;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 6px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.input-row button:hover {
+    background-color: #45a049;
+}
+
+/* Task list */
+ul {
+    list-style: none;
+    margin-top: 25px;
+    padding: 0;
+}
+
+/* Each task item */
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 18px;
+    color: #333;
+}
+
+/* Task content inside li */
+.task-content {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+}
+
+.task-name {
+    font-weight: bold;
+    min-width: 120px;
+}
+
+.task-date, .task-time {
+    min-width: 90px;
+}
+
+/* Delete button */
+li button {
+    background-color: #e74c3c;
+    padding: 6px 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+li button:hover {
+    background-color: #c0392b;
+}
