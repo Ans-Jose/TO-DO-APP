@@ -1,22 +1,20 @@
+from flask import Flask, render_template, request, jsonify, session
 import os
-from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
+app.secret_key = "your-secret-key"  # needed for sessions
 
-# temporary storage (list in memory)
-tasks = []
-
-# show the HTML page
 @app.route('/')
 def home():
+    # initialize a tasks list for this user if it doesn't exist
+    if 'tasks' not in session:
+        session['tasks'] = []
     return render_template('index.html')
 
-# return all tasks
 @app.route('/tasks', methods=['GET'])
 def get_tasks():
-    return jsonify(tasks)
+    return jsonify(session.get('tasks', []))
 
-# add a new task
 @app.route('/tasks', methods=['POST'])
 def add_task():
     data = request.get_json()
@@ -25,14 +23,17 @@ def add_task():
         "date": data['date'],
         "time": data['time']
     }
+    tasks = session.get('tasks', [])
     tasks.append(task_data)
+    session['tasks'] = tasks
     return jsonify({"message": "Task added!"}), 201
 
-# delete a task by index
 @app.route('/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
+    tasks = session.get('tasks', [])
     if 0 <= task_id < len(tasks):
         tasks.pop(task_id)
+        session['tasks'] = tasks
         return jsonify({"message": "Task deleted!"})
     return jsonify({"error": "Task not found"}), 404
 
