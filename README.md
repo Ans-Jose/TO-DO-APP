@@ -14,8 +14,7 @@
   - JavaScript  
 
 ##  How to Run
-  1. Download the code  
-  2. Open `index.html` in your browser  
+  Use this link : https://to-do-list-99w5.onrender.com/
 
 ##  Author
   Created by **ANS JOSE**  
